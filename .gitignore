@@ -1,0 +1,12 @@
+bin/*
+include/*
+lib/*
+share/*
+src/.vscode/*
+src/__pycache__/*
+src/database/__pycache__/*
+src/screens/__pycache__/*
+src/utils/__pycache__/*
+src/gps/__pycache__/*
+.vscode/*
+datasets/*
