@@ -10,3 +10,4 @@ src/utils/__pycache__/*
 src/gps/__pycache__/*
 .vscode/*
 datasets/*
+.ipynb_checkpoints/*
