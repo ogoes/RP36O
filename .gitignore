@@ -11,3 +11,7 @@ src/gps/__pycache__/*
 .vscode/*
 datasets/*
 .ipynb_checkpoints/*
+local/*
+etc/*
+MAMEM_SSVEP/files/*
+MAMEM_SSVEP/.ipynb_checkpoints/*
