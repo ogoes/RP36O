@@ -1,4 +1,4 @@
-import json, socket
+import socket, pickle
 
 class Connection:
     encode = 'utf-8'
@@ -11,13 +11,15 @@ class Connection:
 
     def __send_dict__(self, request):
 
-        as_bytes = bytes('DefautMessage'.encode(Connection.encode))
-        try:
-            as_bytes = json.dumps(request).encode(Connection.encode)
-        except json.decoder.JSONDecodeError:
-            as_bytes = bytes('ERROR: not a dict request'.encode(Connection.encode))
+        sent = None
 
-        return self.__connection.sendall(as_bytes)
+        try:
+            sent = self.__connection.sendall(pickle.dumps(request))
+        except:
+            print("excecao")
+            pass
+
+        return sent
 
 
     def send(self, request):
@@ -26,23 +28,27 @@ class Connection:
 
         if isinstance(request, dict):
             return self.__send_dict__(request)
+        else:
+            return self.__send_dict__({
+                'not_dict': True,
+                'body': request, 
+            })
 
-        return self.__connection.sendall(request)
+        pass
 
 
-    def receive(self, size=1024, dict=False):
+    def receive(self, size=1024):
         if not self.__connection:
             return {}
 
         received = self.__connection.recv(size)
+        response = pickle.loads(received)
 
-        if dict:
-            try:
-                received = json.loads(received.decode(Connection.encode))
-            except json.decoder.JSONDecodeError:
-                pass
+        if response.get('not_dict'):
+            return response.get('body')
 
-        return received
+        
+        return response
     
     def close(self):
         self.__connection.close()

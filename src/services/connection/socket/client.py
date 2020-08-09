@@ -48,15 +48,13 @@ class Client:
                 'port': INFOS[1],
             }
 
-            break
-
         if not self.__socket:
             return False
 
         self.__connection = Connection(
             connection=self.__socket,
             socket=infos.get('socket_infos'),
-            auth=infos['auth'],
+            auth=infos.get('auth'),
             server=infos['server_infos'],
         )
 
@@ -66,7 +64,7 @@ class Client:
         if self.__connection:
             return self.__connection.send(data)
 
-    def receive(self, size):
+    def receive(self, size=1024):
         if self.__connection:
             return self.__connection.receive(size)
 
